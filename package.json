@@ -6,7 +6,6 @@
   "main": "dist/index.js",
   "scripts": {
     "lint": "eslint 'src/**.js' 'tests/**.js' --fix",
-    "test": "eslint 'src/**.js' 'tests/**.js' && jest --coverage",
     "build": "ncc build src/main.js",
     "precommit": "npm run build && git add dist/"
   },
@@ -18,12 +17,12 @@
     "actions",
     "node"
   ],
-  "author": "GitHub",
+  "author": "flcdrg",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.0.0",
-    "@actions/exec": "^1.0.0",
-    "@actions/github": "^1.0.0"
+    "@actions/core": "^1.2.4",
+    "@actions/exec": "^1.0.4",
+    "@actions/github": "^4.0.0"
   },
   "devDependencies": {
     "@zeit/ncc": "^0.20.4",
