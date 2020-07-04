@@ -1,3 +1,3 @@
-const run = require('./upload-release-asset');
+const run = require('./remove-release-asset');
 
 run();
