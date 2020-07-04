@@ -1,5 +1,4 @@
 import core from '@actions/core';
-//const { context, GitHub } = require('@actions/github');
 import * as github from '@actions/github';
 
 async function run() {
@@ -19,14 +18,16 @@ async function run() {
       release_id: releaseId
     });
 
-    const results: any[] = [];
     assets
       .filter(asset => asset.name === assetName)
-      .forEach(asset => {
-        results.push(octokit.repos.deleteReleaseAsset({ owner, repo, asset_id: asset.id }));
+      .forEach(async asset => {
+        try {
+          await octokit.repos.deleteReleaseAsset({ owner, repo, asset_id: asset.id });          
+        } catch (error) {
+          core.warning(`Caught ${error}`)
+        }
       });
 
-    await Promise.all(results);
   } catch (error) {
     core.setFailed(error.message);
   }

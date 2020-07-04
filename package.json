@@ -6,7 +6,7 @@
   "main": "dist/index.js",
   "scripts": {
     "lint": "eslint 'src/**.js' 'tests/**.js' --fix",
-    "build": "ncc build src/main.ts",
+    "build": "ncc build src/main.ts --source-map",
     "precommit": "npm run build && git add dist/",
     "tsc": "tsc"
   },
@@ -26,6 +26,7 @@
     "@actions/github": "^4.0.0"
   },
   "devDependencies": {
+    "@octokit/types": "^5.0.1",
     "@types/node": "^12.12.47",
     "@zeit/ncc": "^0.22.3",
     "eslint": "^6.8.0",

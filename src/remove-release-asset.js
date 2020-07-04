@@ -32,7 +32,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __importDefault(require("@actions/core"));
-//const { context, GitHub } = require('@actions/github');
 const github = __importStar(require("@actions/github"));
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -48,13 +47,16 @@ function run() {
                 repo: repo,
                 release_id: releaseId
             });
-            const results = [];
             assets
                 .filter(asset => asset.name === assetName)
-                .forEach(asset => {
-                results.push(octokit.repos.deleteReleaseAsset({ owner, repo, asset_id: asset.id }));
-            });
-            yield Promise.all(results);
+                .forEach((asset) => __awaiter(this, void 0, void 0, function* () {
+                try {
+                    yield octokit.repos.deleteReleaseAsset({ owner, repo, asset_id: asset.id });
+                }
+                catch (error) {
+                    core_1.default.warning(`Caught ${error}`);
+                }
+            }));
         }
         catch (error) {
             core_1.default.setFailed(error.message);
