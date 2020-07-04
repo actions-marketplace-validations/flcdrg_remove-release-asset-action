@@ -1,3 +1,3 @@
-const run = require('./remove-release-asset');
+import { run } from './remove-release-asset';
 
 run();

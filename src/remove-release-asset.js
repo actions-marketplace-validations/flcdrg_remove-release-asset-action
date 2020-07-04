@@ -27,21 +27,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const core_1 = __importDefault(require("@actions/core"));
+exports.run = void 0;
+const core = __importStar(require("@actions/core"));
 const github = __importStar(require("@actions/github"));
 function run() {
+    var _a;
     return __awaiter(this, void 0, void 0, function* () {
         try {
             // Get authenticated GitHub client (Ocktokit): https://github.com/actions/toolkit/tree/master/packages/github#usage
             const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
             const { owner, repo } = github.context.repo;
             // Get the inputs from the workflow file: https://github.com/actions/toolkit/tree/master/packages/core#inputsoutputs
-            const releaseId = parseInt(core_1.default.getInput('release_id', { required: true }));
-            const assetName = core_1.default.getInput('asset_name', { required: true });
+            const releaseId = parseInt(core.getInput('release_id', { required: true }));
+            const assetName = core.getInput('asset_name', { required: true });
             const { data: assets } = yield octokit.repos.listReleaseAssets({
                 owner: owner,
                 repo: repo,
@@ -54,13 +53,13 @@ function run() {
                     yield octokit.repos.deleteReleaseAsset({ owner, repo, asset_id: asset.id });
                 }
                 catch (error) {
-                    core_1.default.warning(`Caught ${error}`);
+                    core.warning(`Caught ${error}`);
                 }
             }));
         }
         catch (error) {
-            core_1.default.setFailed(error.message);
+            core.setFailed((_a = error.message) !== null && _a !== void 0 ? _a : error);
         }
     });
 }
-module.exports = run;
+exports.run = run;

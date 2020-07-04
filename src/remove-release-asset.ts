@@ -1,7 +1,7 @@
-import core from '@actions/core';
+import * as core from '@actions/core';
 import * as github from '@actions/github';
 
-async function run() {
+export async function run() {
   try {
     // Get authenticated GitHub client (Ocktokit): https://github.com/actions/toolkit/tree/master/packages/github#usage
     const octokit = github.getOctokit(process.env.GITHUB_TOKEN!);
@@ -29,8 +29,6 @@ async function run() {
       });
 
   } catch (error) {
-    core.setFailed(error.message);
+    core.setFailed(error.message ?? error);
   }
 }
-
-module.exports = run;

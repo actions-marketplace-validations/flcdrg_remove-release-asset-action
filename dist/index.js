@@ -489,12 +489,13 @@ module.exports = require("child_process");
 /***/ }),
 
 /***/ 131:
-/***/ (function(__unusedmodule, __unusedexports, __webpack_require__) {
+/***/ (function(__unusedmodule, exports, __webpack_require__) {
 
 "use strict";
 
-const run = __webpack_require__(888);
-run();
+Object.defineProperty(exports, "__esModule", { value: true });
+const remove_release_asset_1 = __webpack_require__(888);
+remove_release_asset_1.run();
 
 
 /***/ }),
@@ -8767,7 +8768,7 @@ module.exports = {
 /***/ }),
 
 /***/ 888:
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(__unusedmodule, exports, __webpack_require__) {
 
 "use strict";
 
@@ -8799,21 +8800,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const core_1 = __importDefault(__webpack_require__(470));
+exports.run = void 0;
+const core = __importStar(__webpack_require__(470));
 const github = __importStar(__webpack_require__(469));
 function run() {
+    var _a;
     return __awaiter(this, void 0, void 0, function* () {
         try {
             // Get authenticated GitHub client (Ocktokit): https://github.com/actions/toolkit/tree/master/packages/github#usage
             const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
             const { owner, repo } = github.context.repo;
             // Get the inputs from the workflow file: https://github.com/actions/toolkit/tree/master/packages/core#inputsoutputs
-            const releaseId = parseInt(core_1.default.getInput('release_id', { required: true }));
-            const assetName = core_1.default.getInput('asset_name', { required: true });
+            const releaseId = parseInt(core.getInput('release_id', { required: true }));
+            const assetName = core.getInput('asset_name', { required: true });
             const { data: assets } = yield octokit.repos.listReleaseAssets({
                 owner: owner,
                 repo: repo,
@@ -8826,16 +8826,16 @@ function run() {
                     yield octokit.repos.deleteReleaseAsset({ owner, repo, asset_id: asset.id });
                 }
                 catch (error) {
-                    core_1.default.warning(`Caught ${error}`);
+                    core.warning(`Caught ${error}`);
                 }
             }));
         }
         catch (error) {
-            core_1.default.setFailed(error.message);
+            core.setFailed((_a = error.message) !== null && _a !== void 0 ? _a : error);
         }
     });
 }
-module.exports = run;
+exports.run = run;
 
 
 /***/ }),
