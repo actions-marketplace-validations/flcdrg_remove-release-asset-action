@@ -18,7 +18,7 @@ jobs:
   update_release_draft:
     name: Update release draft
     runs-on: ubuntu-latest
-    needs: [build]
+    needs: [test]
 
     if: github.ref == 'refs/heads/master'
     steps:
