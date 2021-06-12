@@ -7,12 +7,11 @@
   "scripts": {
     "lint": "eslint 'src/**.js' 'tests/**.js' --fix",
     "build": "ncc build src/main.ts --source-map",
-    "precommit": "npm run build && git add dist/",
     "tsc": "tsc"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/remove-release-asset"
+    "url": "https://github.com/flcdrg/remove-release-asset-action"
   },
   "keywords": [
     "actions",
@@ -53,6 +52,11 @@
         "lines": 80,
         "statements": 80
       }
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run build && git add dist/"
     }
   }
 }
