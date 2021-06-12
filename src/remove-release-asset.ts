@@ -12,7 +12,7 @@ export async function run() {
     const releaseId = parseInt(core.getInput('release_id', { required: true }));
     const assetName = core.getInput('asset_name', { required: true });
 
-    const { data: assets } = await octokit.repos.listReleaseAssets({ 
+    const { data: assets } = await octokit.rest.repos.listReleaseAssets({ 
       owner: owner, 
       repo: repo, 
       release_id: releaseId
@@ -22,7 +22,7 @@ export async function run() {
       .filter(asset => asset.name === assetName)
       .forEach(async asset => {
         try {
-          await octokit.repos.deleteReleaseAsset({ owner, repo, asset_id: asset.id });          
+          await octokit.rest.repos.deleteReleaseAsset({ owner, repo, asset_id: asset.id });          
         } catch (error) {
           core.warning(`Caught ${error}`)
         }
