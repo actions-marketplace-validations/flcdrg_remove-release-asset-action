@@ -10,10 +10,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v2
       - run: |
-          npm ci
-          npm run build
+          npm install
+          npm run all
 
 
   # Job to create/update the latest release draft. Only run for 'main' branch builds
