@@ -1,9 +1,10 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
 
-export async function run() {
+export async function run(): Promise<void> {
   try {
     // Get authenticated GitHub client (Ocktokit): https://github.com/actions/toolkit/tree/master/packages/github#usage
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const octokit = github.getOctokit(process.env.GITHUB_TOKEN!);
 
     const { owner, repo } = github.context.repo;
@@ -12,22 +13,23 @@ export async function run() {
     const releaseId = parseInt(core.getInput('release_id', { required: true }));
     const assetName = core.getInput('asset_name', { required: true });
 
-    const { data: assets } = await octokit.rest.repos.listReleaseAssets({ 
-      owner: owner, 
-      repo: repo, 
+    const { data: assets } = await octokit.rest.repos.listReleaseAssets({
+      owner,
+      repo,
       release_id: releaseId
     });
 
-    assets
-      .filter(asset => asset.name === assetName)
-      .forEach(async asset => {
-        try {
-          await octokit.rest.repos.deleteReleaseAsset({ owner, repo, asset_id: asset.id });          
-        } catch (error) {
-          core.warning(`Caught ${error}`)
-        }
-      });
-
+    for (const asset of assets.filter(a => a.name === assetName)) {
+      try {
+        await octokit.rest.repos.deleteReleaseAsset({
+          owner,
+          repo,
+          asset_id: asset.id
+        });
+      } catch (error) {
+        core.warning(`Caught ${error}`);
+      }
+    }
   } catch (error) {
     core.setFailed(error.message ?? error);
   }

@@ -14,7 +14,7 @@ var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
     __setModuleDefault(result, mod);
     return result;
 };
@@ -41,7 +41,7 @@ function run() {
             // Get the inputs from the workflow file: https://github.com/actions/toolkit/tree/master/packages/core#inputsoutputs
             const releaseId = parseInt(core.getInput('release_id', { required: true }));
             const assetName = core.getInput('asset_name', { required: true });
-            const { data: assets } = yield octokit.repos.listReleaseAssets({
+            const { data: assets } = yield octokit.rest.repos.listReleaseAssets({
                 owner: owner,
                 repo: repo,
                 release_id: releaseId
@@ -50,7 +50,7 @@ function run() {
                 .filter(asset => asset.name === assetName)
                 .forEach((asset) => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    yield octokit.repos.deleteReleaseAsset({ owner, repo, asset_id: asset.id });
+                    yield octokit.rest.repos.deleteReleaseAsset({ owner, repo, asset_id: asset.id });
                 }
                 catch (error) {
                     core.warning(`Caught ${error}`);
