@@ -1,6 +1,6 @@
 name: 'Remove a Release Asset'
 description: 'Remove a release asset from an existing release in your repository'
-author: 'GitHub'
+author: 'flcdrg'
 inputs:
   release_id:
     description: 'The release id to remove asset from'
