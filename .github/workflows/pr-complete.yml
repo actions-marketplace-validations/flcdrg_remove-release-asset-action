@@ -3,10 +3,12 @@
 name: "PR Complete"
 
 on:
-  workflow_run:
-    workflows: ["PR"]
-    types:
-      - completed
+  workflow_dispatch:
+    
+  # workflow_run:
+  #   workflows: ["PR"]
+  #   types:
+  #     - completed
 
 jobs:
   upload:
