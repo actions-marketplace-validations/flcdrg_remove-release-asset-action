@@ -1,19 +1,16 @@
-name: "CI"
+name: "Integration Tests"
 
 on:
-  pull_request:
+  workflow_dispatch:
   push:
-    branches:         # array of glob patterns matching against refs/heads. Optional; defaults to all
-      - master          # triggers on pushes that contain changes in master
+    branches:
+      - master
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - run: npm install
-
-      - run: npm run all      
+      - uses: actions/checkout@v2.3.4
 
       - name: Release & Assets
         id: create-test-release
@@ -44,17 +41,3 @@ jobs:
           release_id: ${{ steps.create-test-release.outputs.id }}
           # Whether suppress errors or not
           suppress_errors: false
-
-  # Job to create/update the latest release draft. Only run for 'main' branch builds
-  update_release_draft:
-    name: Update release draft
-    runs-on: ubuntu-latest
-    needs: [test]
-
-    if: github.ref == 'refs/heads/master'
-    steps:
-        
-      - uses: release-drafter/release-drafter@v5
-        id: create_release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,11 +1,12 @@
 # Auto-merge dependabot pull requests that pass all checks
-name: auto-merge
+name: Auto-merge Dependabot PRs
 
 on:
   pull_request:
 
 jobs:
   auto-merge:
+    if: github.actor == 'dependabot[bot]'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
