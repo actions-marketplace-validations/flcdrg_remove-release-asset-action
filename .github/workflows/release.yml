@@ -6,6 +6,28 @@ on:
       - released
 
 jobs:
+  prepare:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Prepare release notes
+        id: release-notes
+        uses: actions/github-script@v4
+        env:
+          BODY: ${{ github.event.release.body }}
+        with:
+          result-encoding: string
+          script: |
+            const prUrl = '${{ github.event.repository.html_url}}/pulls'
+            const body = process.env.BODY.replace(/\(#(\d+)\)/g, `[$&](${prUrl}/$1)`)
+
+            console.log(body)
+
+            return body
+      
+      - name: Display body
+        run: echo ${{ steps.release-notes.outputs.result }}
+
   dump:
     runs-on: ubuntu-latest
 
