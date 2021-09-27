@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Prepare release notes
         id: release-notes
-        uses: actions/github-script@v4
+        uses: actions/github-script@v5
         env:
           BODY: ${{ github.event.release.body }}
         with:
