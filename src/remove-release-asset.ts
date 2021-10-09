@@ -31,6 +31,8 @@ export async function run(): Promise<void> {
       }
     }
   } catch (error) {
-    core.setFailed(error.message ?? error);
+    if (error instanceof Error) {
+      core.setFailed(error.message ?? error);
+    }
   }
 }
