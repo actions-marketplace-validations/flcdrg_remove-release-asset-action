@@ -6,7 +6,7 @@ Removes an existing asset from a release
 
 ```yaml
 - name: Remove asset
-  uses: flcdrg/remove-release-asset-action@v1.0
+  uses: flcdrg/remove-release-asset-action@v1
   id: remove
   env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
