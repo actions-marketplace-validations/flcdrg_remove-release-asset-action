@@ -18,7 +18,7 @@ Removes an existing asset from a release
 ### Inputs
 
 - `release_id`: GitHub release id
-- `asset_name`: Name of asset to remove
+- `asset_name`: Name of the asset to remove (wildcards are supported via the [minimatch](https://github.com/isaacs/minimatch) library)
 
 ## License
 

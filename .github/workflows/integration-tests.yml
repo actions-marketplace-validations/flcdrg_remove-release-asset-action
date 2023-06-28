@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - master
+  pull_request:
 
 jobs:
   build:
@@ -23,18 +24,27 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}        
         with:
           tag_name: ${{ github.sha }}
-          asset_files: package.json
+          asset_files: |
+            package.json
+            package-lock.json
           draft: true
           prerelease: true
                     
       - name: Test action
         uses: ./ # Uses an action in the root directory
-        id: remove
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           release_id: ${{ steps.create-test-release.outputs.id }}
           asset_name: package.json
+
+      - name: Test action wildcard
+        uses: ./ # Uses an action in the root directory
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          release_id: ${{ steps.create-test-release.outputs.id }}
+          asset_name: "*.json"
 
       - name: Delete test release
         if: ${{ always() }}

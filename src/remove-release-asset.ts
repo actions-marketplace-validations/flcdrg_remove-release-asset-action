@@ -1,5 +1,6 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
+import { minimatch } from 'minimatch';
 
 export async function run(): Promise<void> {
   try {
@@ -19,7 +20,7 @@ export async function run(): Promise<void> {
       release_id: releaseId
     });
 
-    for (const asset of assets.filter(a => a.name === assetName)) {
+    for (const asset of assets.filter(a => minimatch(a.name, assetName))) {
       try {
         await octokit.rest.repos.deleteReleaseAsset({
           owner,
