@@ -9,6 +9,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - uses: GitHubSecurityLab/actions-permissions/monitor@v1
+        with:
+          config: ${{ vars.PERMISSIONS_CONFIG }}
+
       - uses: actions/checkout@v3
 
       - uses: actions/setup-node@v3
@@ -26,7 +30,10 @@ jobs:
     needs: [build]
 
     steps:
-        
+      - uses: GitHubSecurityLab/actions-permissions/monitor@v1
+        with:
+          config: ${{ vars.PERMISSIONS_CONFIG }}
+
       - uses: release-drafter/release-drafter@v5
         id: create_release
         env:
