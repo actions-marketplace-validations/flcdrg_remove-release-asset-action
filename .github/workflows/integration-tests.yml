@@ -54,7 +54,7 @@ jobs:
 
       - name: Delete test release
         if: ${{ always() }}
-        uses: liudonghua123/delete-release-action@v1
+        uses: flcdrg/delete-release-action@dist
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
