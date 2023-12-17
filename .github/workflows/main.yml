@@ -8,6 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions: {}
     steps:
       - uses: GitHubSecurityLab/actions-permissions/monitor@v1
         with:
@@ -17,7 +18,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '16'
+          node-version: '20'
 
       - run: npm ci
 
@@ -27,6 +28,8 @@ jobs:
   update_release_draft:
     name: Update release draft
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     needs: [build]
 
     if: github.ref == 'refs/heads/main' # Running this job only for main branch
