@@ -12,8 +12,6 @@ jobs:
         with:
           config: ${{ vars.PERMISSIONS_CONFIG }}
           
-      - uses: Actions-R-Us/actions-tagger@latest
+      - uses: Actions-R-Us/actions-tagger@v2.0.3
         with:
-          publish_latest: true
-        env:
-          GITHUB_TOKEN: '${{secrets.GITHUB_TOKEN}}'
+          publish_latest_tag: true
