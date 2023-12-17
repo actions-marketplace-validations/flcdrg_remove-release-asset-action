@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - master
+      - main
   pull_request:
 
 jobs:
@@ -16,7 +16,7 @@ jobs:
         with:
           config: ${{ vars.PERMISSIONS_CONFIG }}
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
 
       - uses: actions/setup-node@v4
         with:
@@ -29,6 +29,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.sha }}
+          release_name: Integration test ${{ github.sha }}
           asset_files: |
             package.json
             package-lock.json
