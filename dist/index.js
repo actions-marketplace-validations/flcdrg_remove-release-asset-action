@@ -39,7 +39,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.run = void 0;
+exports.run = run;
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
 const minimatch_1 = __nccwpck_require__(4501);
@@ -79,7 +79,6 @@ function run() {
         }
     });
 }
-exports.run = run;
 
 
 /***/ }),
@@ -32675,10 +32674,11 @@ class Minimatch {
         for (let i = 0; i < globParts.length - 1; i++) {
             for (let j = i + 1; j < globParts.length; j++) {
                 const matched = this.partsMatch(globParts[i], globParts[j], !this.preserveMultipleSlashes);
-                if (!matched)
-                    continue;
-                globParts[i] = matched;
-                globParts[j] = [];
+                if (matched) {
+                    globParts[i] = [];
+                    globParts[j] = matched;
+                    break;
+                }
             }
         }
         return globParts.filter(gs => gs.length);
