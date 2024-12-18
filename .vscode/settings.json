@@ -1,5 +1,6 @@
 {
     "cSpell.words": [
         "octokit"
-    ]
+    ],
+    "search.useIgnoreFiles": true
 }
