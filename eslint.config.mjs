@@ -1,11 +1,11 @@
 import jest from "eslint-plugin-jest";
-import typescriptEslint from "@typescript-eslint/eslint-plugin";
 import globals from "globals";
 import tsParser from "@typescript-eslint/parser";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import js from "@eslint/js";
 import { FlatCompat } from "@eslint/eslintrc";
+import github from 'eslint-plugin-github';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -15,13 +15,14 @@ const compat = new FlatCompat({
     allConfig: js.configs.all
 });
 
-export default [{
+export default [
+    github.getFlatConfigs().browser,
+  github.getFlatConfigs().recommended,
+  github.getFlatConfigs().react,
+  ...github.getFlatConfigs().typescript,
+    {
     ignores: ["**/dist/", "**/lib/", "**/node_modules/", "**/jest.config.js"],
-}, ...compat.extends("plugin:github/recommended", "plugin:@typescript-eslint/recommended"), {
-    plugins: {
-        jest,
-        "@typescript-eslint": typescriptEslint,
-    },
+}, {
 
     languageOptions: {
         globals: {
