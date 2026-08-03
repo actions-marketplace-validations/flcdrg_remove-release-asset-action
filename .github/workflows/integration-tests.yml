@@ -20,7 +20,7 @@ jobs:
         with:
           node-version-file: package.json
 
-      - uses: pnpm/action-setup@v6
+      - uses: pnpm/action-setup@v6.0.9
 
       - name: Release & Assets
         id: create-test-release
